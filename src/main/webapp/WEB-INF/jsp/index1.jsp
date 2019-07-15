@@ -74,7 +74,7 @@ a {
 </head>
 <body>
 
-<form action="/about" method="post"> 
+<form action="/Bizeet_SpringBoot1/about" method="post"> 
 
   <div class="container">
     <h1>Welcome To Demo</h1>
