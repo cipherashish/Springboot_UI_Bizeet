@@ -1,18 +1,7 @@
 pipeline{
     agent any
     stages{
-        stage('checkout'){
-            steps{
-                withCredentials([string(credentialsId: 'Bizeet_GitRepo', variable: 'bizeet')]) {
-                echo "My password is '${bizeet}'!"
-                checkout([$class: 'GitSCM',
-                branches: [[name: 'origin/develop']],
-                extensions: [[$class: 'WipeWorkspace']],
-                userRemoteConfigs: [[url: "${bizeet}"]]
-                ])
-                }
-            }
-        }
+      
              stage ('build & Test'){
             steps{
                 sh "mvn clean install"
@@ -43,7 +32,7 @@ pipeline{
             steps{
                  withCredentials([usernamePassword(credentialsId: 'devops-tomcat', passwordVariable: 'pass', usernameVariable: 'userId')]) {
         
-                    //sh label: '', script:'curl -u "${userId}" "${pass}" http://ec2-18-224-182-74.us-east-2.compute.amazonaws.com:8080/manager/text/undeploy?path=/Bizeet_SpringBoot1'
+                    sh 'curl -u  $userId:$pass http://ec2-18-224-182-74.us-east-2.compute.amazonaws.com:8080/manager/text/undeploy?path=/Bizeet_SpringBoot1'
                     sh  'curl -u  $userId:$pass --upload-file target/demo2-${BUILD_NUMBER}.war http://ec2-18-224-182-74.us-east-2.compute.amazonaws.com:8080/manager/text/deploy?config=file:/var/lib/tomcat8/demo2-${BUILD_NUMBER}.war\\&path=/Bizeet_SpringBoot1'
             }
         }
