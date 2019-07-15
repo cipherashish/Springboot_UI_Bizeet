@@ -23,9 +23,9 @@ public class WelcomeControllerTest {
 
 	@Test
 	public void test() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.get("/welcome").accept(MediaType.APPLICATION_JSON))
+		mvc.perform(MockMvcRequestBuilders.get("/").accept(MediaType.APPLICATION_JSON))
 		.andExpect(status().isOk())
-		.andExpect(content().string(equalTo("Bizeet")));
+		.andExpect(content().string(equalTo("index")));
 		
 	}
 
